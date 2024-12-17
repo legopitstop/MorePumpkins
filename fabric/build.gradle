@@ -2,6 +2,7 @@ plugins {
     id 'multiloader-loader'
     id 'fabric-loom'
 }
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.layered {
@@ -33,5 +34,17 @@ loom {
             ideConfigGenerated(true)
             runDir('runs/server')
         }
+
+        data {
+            inherit server
+            name "Fabric Data"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated/resources")}"
+            vmArg "-Dfabric-api.datagen.modid=${group}"
+
+            runDir "runs/data"
+        }
     }
 }
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
